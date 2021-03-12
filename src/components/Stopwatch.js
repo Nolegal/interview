@@ -14,6 +14,10 @@ function Stopwatch() {
     const [isActive2, setIsActive2] = useState(false)
     const [isPaused2, setIsPaused2] = useState(false)
     const countRef2 = useRef(null)
+    const [res, setRes] = useState([])
+
+
+
 
 
     const startWatch = () => {
@@ -70,14 +74,21 @@ function Stopwatch() {
     }
 
     const FormatTimer2 = () => {
+
         const getSeconds = `0${(timer2 % 60)}`.slice(-2)
         const minutes = `${Math.floor(timer2 / 60)}`
         const getMinutes = `0${minutes % 60}`.slice(-2)
         const getHours = `0${Math.floor(timer2 / 3600)}`.slice(-2)
-        if (isActive2 && isPaused) {
-            return `${getHours} : ${getMinutes} : ${getSeconds} промежуток времени.. `
+        const part = `${getHours} : ${getMinutes} : ${getSeconds}промежуток времени..`
+
+        if (isActive2) {
+            return res.push(part)
         }
+
     }
+
+
+
     const red = {
         color: 'red',
     }
@@ -95,10 +106,17 @@ function Stopwatch() {
                 <p>{FormatTimer()}</p>
 
 
-                <button style={red} onClick={() => { startWatch(); pauseWatch2(); }}>{isActive && isPaused2}Start</button>
+                <button style={red} onClick={() => { startWatch(); pauseWatch2(); FormatTimer2(); }}>{isActive && isPaused2}Start</button>
                 <button style={green} onClick={() => { pauseWatch(); startWatch2(); }}>{isPaused && isActive2}Pause</button>
                 <button style={blue} onClick={resetWatch}>reset</button>
-                <p>{FormatTimer2()}</p>
+
+                <div>
+                    {res.map((item) => <div >{item}</div>)}
+                </div>
+
+
+
+
             </section>
         </>
     );
