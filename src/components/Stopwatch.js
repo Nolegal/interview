@@ -46,14 +46,18 @@ function Stopwatch() {
         setIsActive(false)
         setIsPaused(false)
         setTimer(0)
-    }
-
-    const resetWatch2 = () => {
         clearInterval(countRef2.current)
         setIsActive2(false)
         setIsPaused2(false)
         setTimer2(0)
     }
+
+    // const resetWatch2 = () => {
+    //     clearInterval(countRef2.current)
+    //     setIsActive2(false)
+    //     setIsPaused2(false)
+    //     setTimer2(0)
+    // }
 
 
     const FormatTimer = () => {
@@ -70,8 +74,9 @@ function Stopwatch() {
         const minutes = `${Math.floor(timer2 / 60)}`
         const getMinutes = `0${minutes % 60}`.slice(-2)
         const getHours = `0${Math.floor(timer2 / 3600)}`.slice(-2)
-
-        return `${getHours} : ${getMinutes} : ${getSeconds} промежуток времени..`
+        if (isActive2 && isPaused) {
+            return `${getHours} : ${getMinutes} : ${getSeconds} промежуток времени.. `
+        }
     }
     const red = {
         color: 'red',
@@ -92,7 +97,7 @@ function Stopwatch() {
 
                 <button style={red} onClick={() => { startWatch(); pauseWatch2(); }}>{isActive && isPaused2}Start</button>
                 <button style={green} onClick={() => { pauseWatch(); startWatch2(); }}>{isPaused && isActive2}Pause</button>
-                <button style={blue} onClick={() => { resetWatch(); resetWatch2(); }}>reset</button>
+                <button style={blue} onClick={resetWatch}>reset</button>
                 <p>{FormatTimer2()}</p>
             </section>
         </>
